@@ -27,15 +27,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    reg.cpp \
     alu.cpp \
-    package.cpp
+    package.cpp \
+    registry.cpp \
+    regs.cpp
 
 HEADERS += \
         mainwindow.h \
-    reg.h \
     alu.h \
-    package.h
+    package.h \
+    registry.h \
+    regs.h
 
 FORMS += \
         mainwindow.ui

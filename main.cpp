@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "reg.h"
+#include "registry.h"
 #include"iostream"
 #include "QString"
 
@@ -20,18 +20,10 @@ unsigned int QstringToUnInt(QString binary){
     }
 }
 
-int main()
+int main(int argc, char **argv)
 {
-//    Reg a;
-//    a.setReg(3,5);
-
-//    int temp[32];
-//    a.getAll(temp);
-//    for(int i  = 0;i<32;i++){
-//        std::cout<< temp[i] << std::endl;
-//    }
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

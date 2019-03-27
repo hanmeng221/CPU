@@ -3,6 +3,7 @@
 
 #endif // PACKAGE_H
 #include "QString"
+#include "registry.h"
 
 class package{
 public:
@@ -10,9 +11,10 @@ public:
     QString getKind();
     int getAddr();
     bool isLegal();
+    unsigned int  getData();
 private:
     QString kind;
-    unsigned int data;
+    registry data;
     int addr;
     bool legal;
 };

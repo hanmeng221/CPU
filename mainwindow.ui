@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="regsTableWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -88,7 +88,7 @@
      <string>GET</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget_2">
+   <widget class="QTableWidget" name="aluTableWidget">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -162,7 +162,7 @@
      <string>CONNECT</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget_3">
+   <widget class="QTableWidget" name="instTableWidget">
     <property name="geometry">
      <rect>
       <x>450</x>

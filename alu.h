@@ -1,6 +1,7 @@
 #ifndef ALU_H
 #define ALU_H
 #include "QString"
+#include "registry.h"
 
 #endif // ALU_H
 
@@ -19,10 +20,10 @@ public:
     QString getOption();
     ~ALU();
 private:
-    unsigned int reg1;
-    unsigned int reg2;
-    unsigned int result;
-    unsigned int inst;
+    registry reg1;
+    registry reg2;
+    registry result;
+    registry inst;
     QString option;
     void setOption();
 };

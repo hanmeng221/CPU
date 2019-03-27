@@ -8,36 +8,36 @@ ALU::~ALU(){
 
 }
 void ALU::init(){
-    this->inst = 0;
-    this->reg1 = 0;
-    this->reg2 = 0;
-    this->result = 0;
+    this->inst.init();
+    this->reg1.init();
+    this->reg2.init();
+    this->result.init();
     this->option = "NOP";
 }
 void ALU::setInst(unsigned int inst){
-    this->inst  = inst;
+    this->inst.setReg(inst);
     this->setOption();
 }
 
 void ALU::setReg1(unsigned int reg1){
-    this->reg1 = reg1;
+    this->reg1.setReg(reg1);
 }
 
 void ALU::setReg2(unsigned int reg2){
-    this->reg2 = reg2;
+    this->reg2.setReg(reg2);
 }
 
 void ALU::setResult(unsigned int result){
-    this->result = result;
+    this->result.setReg(result);
 }
 
 void ALU::setOption(){
-    int op1 = this->inst/67108864;
+    unsigned int op1 = this->inst.getSubData(31,26);
     switch (op1) { // op1 = inst[31:26]
         case 0:{
-            int op2 = (this->inst/64) % 32; // op2 = inst[10:6]
+            unsigned int op2 = this->inst.getSubData(10,6); // op2 = inst[10:6]
             if(op2 == 0){
-                int op4 = this->inst % 64; //op4 = inst[5:0]
+                unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
                 switch (op4) {
                 case 4:this->option = "SLLV";break;
                 case 6:this->option = "SRLV";break;
@@ -67,9 +67,9 @@ void ALU::setOption(){
                 }
             }//end if op2 = 0
             else{
-                int op3 = (this->inst/4194304) % 32;//op3 = inst[25:21]
+                unsigned int op3 = this->inst.getSubData(25,21);//op3 = inst[25:21]
                 if( op3 == 0){ //sll,srl,sra
-                    int op4 = this->inst % 64; //op4 = inst[5:0]
+                    unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
                     switch (op4) {
                     case 0:this->option = "SLL";break;
                     case 2:this->option = "SRL";break;
@@ -85,7 +85,7 @@ void ALU::setOption(){
         break;
         }//end case 0
         case 1:{
-        int op5 = (this->inst/65536) % 32;//op5 = inst[20:16];
+        unsigned int op5 = this->inst.getSubData(20,16);//op5 = inst[20:16];
         switch (op5) {
         case 0:this->option = "BLTZ";break;
         case 1:this->option = "BGEZ";break;
@@ -109,7 +109,7 @@ void ALU::setOption(){
     case 14:this->option = "XORI";break;
     case 15:this->option = "LUI";break;
     case 28:{
-        int op4 = this->inst % 64; //op4 = inst[5:0]
+        unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
         switch (op4){
         case 2:this->option =  "MUL";break;
         case 32:this->option = "CLZ";break;
@@ -126,16 +126,16 @@ void ALU::setOption(){
 }
 
 unsigned int ALU::getInst(){
-    return this->inst;
+    return this->inst.getReg();
 }
 unsigned int ALU::getReg1(){
-    return this->reg1;
+    return this->reg1.getReg();
 }
 unsigned int ALU::getReg2(){
-    return this->reg2;
+    return this->reg2.getReg();
 }
 unsigned int ALU::getResult(){
-    return this->result;
+    return this->result.getReg();
 }
 QString ALU::getOption(){
     return this->option;
