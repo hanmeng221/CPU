@@ -36,5 +36,15 @@ unsigned int registry::getSubData(int start,int end)
         return (this->reg>> s) & ((1<<(b-s+1)) -1);
     }
 }
+
+QString registry::toQString(int bit)
+{
+    if(bit < 2 || bit >16)
+    {
+        bit = 10;
+        std::cout<<"the outputbit is out of range [2,16] ,use 10 to instead of "<<std::endl;
+    }
+    return  QString::fromUtf8(QByteArray::number(this->reg,bit));
+}
 registry::~registry(){
 }

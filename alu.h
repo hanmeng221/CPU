@@ -18,6 +18,14 @@ public:
     unsigned int getReg2();
     unsigned int getResult();
     QString getOption();
+
+    QString getShowInst(int bit);
+    QString getShowReg1(int bit);
+    QString getShowReg2(int bit);
+    QString getShowResult(int bit);
+    QString getShowOption();
+
+
     ~ALU();
 private:
     registry reg1;

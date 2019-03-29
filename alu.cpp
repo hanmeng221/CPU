@@ -14,6 +14,7 @@ void ALU::init(){
     this->result.init();
     this->option = "NOP";
 }
+
 void ALU::setInst(unsigned int inst){
     this->inst.setReg(inst);
     this->setOption();
@@ -139,5 +140,26 @@ unsigned int ALU::getResult(){
 }
 QString ALU::getOption(){
     return this->option;
+}
+
+QString ALU::getShowInst(int bit)
+{
+    return  this->inst.toQString(bit);
+}
+QString ALU::getShowReg1(int bit)
+{
+    return this->reg1.toQString(bit);
+}
+QString ALU::getShowReg2(int bit)
+{
+    return this->reg2.toQString(bit);
+}
+QString ALU::getShowResult(int bit)
+{
+    return this->result.toQString(bit);
+}
+QString ALU::getShowOption()
+{
+    return this->getOption();
 }
 

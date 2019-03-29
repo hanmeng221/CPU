@@ -9,6 +9,7 @@ public:
     Regs();
     void init();
     unsigned int getData(int addr);
+    QString getShowData(int addr,int bit);
     void setData(int addr,unsigned int data);
     ~Regs();
     QVector<unsigned int> getAll();

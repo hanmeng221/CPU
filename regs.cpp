@@ -50,6 +50,15 @@ QVector<unsigned int> Regs::getAll()
     return  result;
 }
 
+QString Regs::getShowData(int addr,int bit)
+{
+    if(addr < 0 || addr > 31)
+    {
+        addr = 0;
+        std::cout<<"the addr is out of range [0,31],use 0 instead of "<<std::endl;
+    }
+    return this->reg[addr].toQString(bit);
+}
 Regs::~Regs()
 {
 

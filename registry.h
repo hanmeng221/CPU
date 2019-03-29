@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "iostream"
+#include <QString>
+#include "QByteArray"
 
 class registry : public QObject
 {
@@ -14,6 +16,7 @@ public:
     unsigned int getReg();
     unsigned int getSubData(int start,int end);
     void setReg(unsigned int data);
+    QString toQString(int bit);
     ~registry();
 signals:
 

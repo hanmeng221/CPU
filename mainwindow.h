@@ -23,6 +23,7 @@ private:
     Ui::MainWindow *ui;
     Regs* regs;
     ALU* alu;
+    int outputbit;
 };
 
 #endif // MAINWINDOW_H
