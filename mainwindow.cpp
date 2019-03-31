@@ -6,11 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    alu = new ALU();
-    regs = new Regs();
+    this->alu = new ALU();
+    this->regs = new Regs();
+    this->ssi = new SSI();
+    this->pkg = new package();
+    this->setPortCombobox();
     this->outputbit = 16;
     this->printAlu();
     this->printRegs();
+
 }
 
 MainWindow::~MainWindow()
@@ -104,4 +108,44 @@ void MainWindow::printRegs()
     this->ui->regsTableWidget->setItem(13,3,new QTableWidgetItem(this->regs->getShowData(28,this->outputbit)));
     this->ui->regsTableWidget->setItem(14,3,new QTableWidgetItem(this->regs->getShowData(30,this->outputbit)));
     this->ui->regsTableWidget->setItem(15,3,new QTableWidgetItem(this->regs->getShowData(31,this->outputbit)));
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    this->ui->comboBox->clear();
+    this->setPortCombobox();
+}
+
+void MainWindow::setPortCombobox()
+{
+    QList<QSerialPortInfo> ports = this->ssi->getAllPorts();
+    for(QList<QSerialPortInfo>::iterator port = ports.begin(); port != ports.end();port ++)
+    {
+        this->ui->comboBox->addItem(port->portName());
+    }
+}
+
+
+int data_count = 0;
+
+void MainWindow::receiveinfo()
+{
+   char temp = this->ssi->receiveInfo().data()[0];
+   this->pkg->receivedata(temp);
+
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    if(this->ui->comboBox->count() == 0)
+    {
+        std::cout<<"can not find a useable port"<<std::endl;
+    }
+    else
+    {
+        QString portName = this->ui->comboBox->currentText();
+        this->ssi->connectPorts(portName);
+        connect(this->ssi->m_serialPort,SIGNAL(readyRead()),this,SLOT(receiveinfo()));
+
+    }
 }

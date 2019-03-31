@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,14 +31,16 @@ SOURCES += \
     alu.cpp \
     package.cpp \
     registry.cpp \
-    regs.cpp
+    regs.cpp \
+    ssi.cpp
 
 HEADERS += \
         mainwindow.h \
     alu.h \
     package.h \
     registry.h \
-    regs.h
+    regs.h \
+    ssi.h
 
 FORMS += \
         mainwindow.ui
