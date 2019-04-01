@@ -5,12 +5,19 @@
 #include "QString"
 #include "registry.h"
 
+enum packagetype{
+    REGS,
+    ALU,
+    INST,
+    OTHER
+};
+
 class package{
 public:
     package();
     void packaging();
     void receivedata(unsigned char data);
-    QString getKind();
+    packagetype getKind();
     int getAddr();
     bool isLegal();
     unsigned int  getData();
@@ -22,7 +29,7 @@ private:
     unsigned char data4;
     unsigned char tail;
 
-    QString kind;
+    packagetype kind;
     registry data;
     int addr;
     bool legal;
