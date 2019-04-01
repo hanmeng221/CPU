@@ -5,9 +5,9 @@
 
 #endif // ALU_H
 
-class ALU{
+class Alu{
 public:
-    ALU();
+    Alu();
     void init();
     void setInst(unsigned int inst);
     void setReg1(unsigned  reg1);
@@ -26,7 +26,7 @@ public:
     QString getShowOption();
 
 
-    ~ALU();
+    ~Alu();
 private:
     registry reg1;
     registry reg2;

@@ -33,9 +33,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Regs* regs;
-    ALU* alu;
-    SSI* ssi;
-    package * pkg;
+    Alu* alu;
+    Ssi* ssi;
+    Package * pkg;
     int outputbit;
 };
 

@@ -1,16 +1,16 @@
-#include "ssi.h"
+#include "Ssi.h"
 
-SSI::SSI()
+Ssi::Ssi()
 {
     m_serialPort = new QSerialPort();
 }
 
-QList<QSerialPortInfo> SSI::getAllPorts()
+QList<QSerialPortInfo> Ssi::getAllPorts()
 {
     return QSerialPortInfo::availablePorts();
 }
 
-void SSI::connectPorts(QString portName)
+void Ssi::connectPorts(QString portName)
 {
     if(m_serialPort->isOpen())
     {
@@ -33,7 +33,7 @@ void SSI::connectPorts(QString portName)
     }
 }
 
-QByteArray SSI::receiveInfo()
+QByteArray Ssi::receiveInfo()
 {
      return m_serialPort->readAll();
 }

@@ -7,10 +7,10 @@
 #include <package.h>
 
 
-class SSI
+class Ssi
 {
 public:
-    SSI();
+    Ssi();
 
     QList<QSerialPortInfo> getAllPorts();
     void connectPorts(QString portName);

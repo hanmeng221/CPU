@@ -1,13 +1,13 @@
 #include "alu.h"
 
-ALU::ALU(){
+Alu::Alu(){
     this->init();
 }
 
-ALU::~ALU(){
+Alu::~Alu(){
 
 }
-void ALU::init(){
+void Alu::init(){
     this->inst.init();
     this->reg1.init();
     this->reg2.init();
@@ -15,24 +15,24 @@ void ALU::init(){
     this->option = "NOP";
 }
 
-void ALU::setInst(unsigned int inst){
+void Alu::setInst(unsigned int inst){
     this->inst.setReg(inst);
     this->setOption();
 }
 
-void ALU::setReg1(unsigned int reg1){
+void Alu::setReg1(unsigned int reg1){
     this->reg1.setReg(reg1);
 }
 
-void ALU::setReg2(unsigned int reg2){
+void Alu::setReg2(unsigned int reg2){
     this->reg2.setReg(reg2);
 }
 
-void ALU::setResult(unsigned int result){
+void Alu::setResult(unsigned int result){
     this->result.setReg(result);
 }
 
-void ALU::setOption(){
+void Alu::setOption(){
     unsigned int op1 = this->inst.getSubData(31,26);
     switch (op1) { // op1 = inst[31:26]
         case 0:{
@@ -126,39 +126,39 @@ void ALU::setOption(){
     }
 }
 
-unsigned int ALU::getInst(){
+unsigned int Alu::getInst(){
     return this->inst.getReg();
 }
-unsigned int ALU::getReg1(){
+unsigned int Alu::getReg1(){
     return this->reg1.getReg();
 }
-unsigned int ALU::getReg2(){
+unsigned int Alu::getReg2(){
     return this->reg2.getReg();
 }
-unsigned int ALU::getResult(){
+unsigned int Alu::getResult(){
     return this->result.getReg();
 }
-QString ALU::getOption(){
+QString Alu::getOption(){
     return this->option;
 }
 
-QString ALU::getShowInst(int bit)
+QString Alu::getShowInst(int bit)
 {
     return  this->inst.toQString(bit);
 }
-QString ALU::getShowReg1(int bit)
+QString Alu::getShowReg1(int bit)
 {
     return this->reg1.toQString(bit);
 }
-QString ALU::getShowReg2(int bit)
+QString Alu::getShowReg2(int bit)
 {
     return this->reg2.toQString(bit);
 }
-QString ALU::getShowResult(int bit)
+QString Alu::getShowResult(int bit)
 {
     return this->result.toQString(bit);
 }
-QString ALU::getShowOption()
+QString Alu::getShowOption()
 {
     return this->getOption();
 }

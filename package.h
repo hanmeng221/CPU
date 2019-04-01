@@ -12,9 +12,9 @@ enum packagetype{
     OTHER
 };
 
-class package{
+class Package{
 public:
-    package();
+    Package();
     void packaging();
     void receivedata(unsigned char data);
     packagetype getKind();

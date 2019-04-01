@@ -1,5 +1,5 @@
 #include "package.h"
-/*package struct
+/*Package struct
  * legal: 偶校验
  * 1 | 0 | legal| addr [4:0]                         |
  * 0 | d[30:24]                                      |
@@ -11,7 +11,7 @@
  */
 
 
-package::package()
+Package::Package()
 {
     this->head = 0;
     this->data1 = 0;
@@ -22,21 +22,21 @@ package::package()
     this->data_count = 0;
 }
 
-void package::packaging()
+void Package::packaging()
 {
     this->setLegal();
     if(this->isLegal())
     {
-        this->data.setReg(((this->data1 + (this->getDataNum(this->tail,3) << 7)) << 24)
+        this->data.setReg(static_cast<unsigned int>(((this->data1 + (this->getDataNum(this->tail,3) << 7)) << 24)
                       +((this->data2 + (this->getDataNum(this->tail,2) << 7)) << 16)
                       +((this->data3 + (this->getDataNum(this->tail,1) << 7)) << 8)
-                      +(this->data4 + (this->getDataNum(this->tail,0) << 7)) );
+                      +(this->data4 + (this->getDataNum(this->tail,0) << 7))));
         this->setAddr();
         this->setKind();
     }
     else
     {
-        std::cout<<"the package is not legal:receive data:"<<std::endl
+        std::cout<<"the Package is not legal:receive data:"<<std::endl
                     <<"\thead:"<<this->head<<std::endl
                     <<"\tdata1:"<<this->data1<<std::endl
                     <<"\tdata2:"<<this->data2<<std::endl
@@ -46,7 +46,7 @@ void package::packaging()
     }
 }
 
-bool package::setHead(unsigned char head)
+bool Package::setHead(unsigned char head)
 {
     //10xxxxxx
     if(!isZero(head,7) && isZero(head,6))
@@ -61,7 +61,7 @@ bool package::setHead(unsigned char head)
 
 }
 
-bool package::setData1(unsigned char data1)
+bool Package::setData1(unsigned char data1)
 {
     //0xxxxxxx
     if(isZero(data1,7))
@@ -75,7 +75,7 @@ bool package::setData1(unsigned char data1)
     }
 }
 
-bool package::setData2(unsigned char data2)
+bool Package::setData2(unsigned char data2)
 {
     //0xxxxxxx
     if(isZero(data2,7))
@@ -89,7 +89,7 @@ bool package::setData2(unsigned char data2)
         return false;
     }
 }
-bool package::setData3(unsigned char data3)
+bool Package::setData3(unsigned char data3)
 {
     //0xxxxxxx
     if(isZero(data3,7))
@@ -104,7 +104,7 @@ bool package::setData3(unsigned char data3)
 
 }
 
-bool package::setData4(unsigned char data4)
+bool Package::setData4(unsigned char data4)
 {
     //0xxxxxxx
     if(isZero(data4,7))
@@ -118,7 +118,7 @@ bool package::setData4(unsigned char data4)
     }
 }
 
-bool package::setTail(unsigned char tail)
+bool Package::setTail(unsigned char tail)
 {
     //11xxxxxx
     if(!isZero(tail,7) && !isZero(tail,6))
@@ -132,39 +132,39 @@ bool package::setTail(unsigned char tail)
     }
 }
 
-bool package::isZero(unsigned char data,int addr)
+bool Package::isZero(unsigned char data,int addr)
 {
     return  (((data >> addr) & 1) == 0 ) ? true:false;
 }
 
-int package::getDataNum(unsigned char data, int addr)
+int Package::getDataNum(unsigned char data, int addr)
 {
     return (data >> addr ) & 1;
 }
 
-packagetype package::getKind()
+packagetype Package::getKind()
 {
     return this->kind;
 }
 
-int package::getAddr()
+int Package::getAddr()
 {
     return this->addr;
 }
 
-bool package::isLegal()
+bool Package::isLegal()
 {
     return this->legal;
 }
 
-unsigned int  package::getData()
+unsigned int  Package::getData()
 {
     return this->data.getReg();
 }
 
-void package::setKind()
+void Package::setKind()
 {
-    switch (this->getDataNum(this->tail,5) << 1 + this->getDataNum(this->tail,4)) {
+    switch ((this->getDataNum(this->tail,5) << 1 )+ this->getDataNum(this->tail,4)) {
     case 0:
         this->kind = REGS;
         break;
@@ -182,17 +182,17 @@ void package::setKind()
     };
 }
 
-void package::setAddr()
+void Package::setAddr()
 {
     this->addr = this->head  &  31;
 }
 
-void package::setLegal()
+void Package::setLegal()
 {
     this->legal = (this->getDataNum(this->head,5) ^ (this->data1 & 1) ^ (this->data2 & 1) ^ (this->data3 & 1) ^ (this->data4 & 1) ^ (this->tail & 1))  == 0 ? true:false;
 }
 
-void package::receivedata(unsigned char data)
+void Package::receivedata(unsigned char data)
 {
     switch (this->data_count) {
     case 0:

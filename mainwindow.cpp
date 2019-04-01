@@ -6,10 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->alu = new ALU();
+    this->alu = new Alu();
     this->regs = new Regs();
-    this->ssi = new SSI();
-    this->pkg = new package();
+    this->ssi = new Ssi();
+    this->pkg = new Package();
     this->setPortCombobox();
     this->outputbit = 16;
     this->printAlu();
@@ -125,8 +125,6 @@ void MainWindow::setPortCombobox()
     }
 }
 
-
-int data_count = 0;
 
 void MainWindow::receiveinfo()
 {
