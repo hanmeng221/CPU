@@ -9,10 +9,6 @@ class Alu{
 public:
     Alu();
     void init();
-    void setInst(unsigned int inst);
-    void setReg1(unsigned  reg1);
-    void setReg2(unsigned int reg2);
-    void setResult(unsigned int result);
     unsigned int getInst();
     unsigned int getReg1();
     unsigned int getReg2();
@@ -24,7 +20,7 @@ public:
     QString getShowReg2(int bit);
     QString getShowResult(int bit);
     QString getShowOption();
-
+    void setData(int addr,unsigned int data);
 
     ~Alu();
 private:
@@ -34,4 +30,9 @@ private:
     registry inst;
     QString option;
     void setOption();
+    void setInst(unsigned int inst);
+    void setReg1(unsigned  reg1);
+    void setReg2(unsigned int reg2);
+    void setResult(unsigned int result);
+
 };

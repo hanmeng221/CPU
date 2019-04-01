@@ -16,7 +16,7 @@ class Package{
 public:
     Package();
     void packaging();
-    void receivedata(unsigned char data);
+    bool receivedata(unsigned char data);
     packagetype getKind();
     int getAddr();
     bool isLegal();

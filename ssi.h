@@ -6,14 +6,19 @@
 #include <QSerialPort>
 #include <package.h>
 
+enum SsiInfo {
+    GET,
+    PING,
+    RESET
+};
 
 class Ssi
 {
 public:
     Ssi();
-
     QList<QSerialPortInfo> getAllPorts();
     void connectPorts(QString portName);
+    void sendData(SsiInfo data);
     QByteArray receiveInfo();
     QSerialPort* m_serialPort;
 private:

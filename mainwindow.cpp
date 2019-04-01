@@ -128,9 +128,33 @@ void MainWindow::setPortCombobox()
 
 void MainWindow::receiveinfo()
 {
-   char temp = this->ssi->receiveInfo().data()[0];
-   this->pkg->receivedata(temp);
-
+    //@TODO if continue receive lots of messages, if we only use data[0], maybe loss information.
+   unsigned char temp = static_cast<unsigned char>(this->ssi->receiveInfo().data()[0]);
+   if(this->pkg->receivedata(temp))
+   {
+        switch(this->pkg->getKind())
+        {
+        case REGS:
+        {
+            this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
+            break;
+        }
+        case ALU:
+        {
+            this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
+            break;
+        }
+        case INST:
+        {
+            //@TODO
+            break;
+        }
+        case OTHER:
+        {
+            break;
+        }
+        }
+   }
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -146,4 +170,19 @@ void MainWindow::on_pushButton_3_clicked()
         connect(this->ssi->m_serialPort,SIGNAL(readyRead()),this,SLOT(receiveinfo()));
 
     }
+}
+
+void MainWindow::on_pushButton_clicked() //get
+{
+       this->ssi->sendData(GET);
+}
+
+void MainWindow::on_pushButton_4_clicked() //ping
+{
+    this->ssi->sendData(PING);
+}
+
+void MainWindow::on_pushButton_2_clicked() // resetn
+{
+    this->ssi->sendData(RESET);
 }

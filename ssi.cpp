@@ -1,4 +1,4 @@
-#include "Ssi.h"
+#include "ssi.h"
 
 Ssi::Ssi()
 {
@@ -36,4 +36,21 @@ void Ssi::connectPorts(QString portName)
 QByteArray Ssi::receiveInfo()
 {
      return m_serialPort->readAll();
+}
+
+void Ssi::sendData(SsiInfo data)
+{
+    char toSentData;
+    switch (data) {
+    case GET:
+        toSentData = 'g';
+        break;
+    case PING:
+        toSentData = 'p';
+        break;
+    case RESET:
+        toSentData = 'r';
+        break;
+    }
+    this->m_serialPort->write(&toSentData);
 }

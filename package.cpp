@@ -82,7 +82,6 @@ bool Package::setData2(unsigned char data2)
     {
         this->data2 = data2;
         return true;
-
     }
     else
     {
@@ -192,7 +191,7 @@ void Package::setLegal()
     this->legal = (this->getDataNum(this->head,5) ^ (this->data1 & 1) ^ (this->data2 & 1) ^ (this->data3 & 1) ^ (this->data4 & 1) ^ (this->tail & 1))  == 0 ? true:false;
 }
 
-void Package::receivedata(unsigned char data)
+bool Package::receivedata(unsigned char data)
 {
     switch (this->data_count) {
     case 0:
@@ -247,7 +246,7 @@ void Package::receivedata(unsigned char data)
             this->packaging();
             if(this->isLegal())
             {
-             //change the output
+                return true;
             }
         }
         else
@@ -259,4 +258,5 @@ void Package::receivedata(unsigned char data)
     default:
         break;
     }
+    return false;
 }
