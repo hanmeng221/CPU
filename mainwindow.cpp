@@ -10,11 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->regs = new Regs();
     this->ssi = new Ssi();
     this->pkg = new Package();
+    this->inst = new Inst(this->ui->instTableWidget->rowCount());
     this->setPortCombobox();
     this->outputbit = 16;
     this->printAlu();
     this->printRegs();
-
+    this->printInst();
 }
 
 MainWindow::~MainWindow()
@@ -125,6 +126,16 @@ void MainWindow::setPortCombobox()
     }
 }
 
+void MainWindow::printInst()
+{
+    int ptr = this->ui->instTableWidget->rowCount() - 1;
+    QQueue<unsigned int> temp = this->inst->getQueue();
+    for(QQueue<unsigned int>::iterator i = temp.begin() , total = temp.end(); i!= total; i++,ptr --)
+    {
+        this->ui->instTableWidget->setItem(ptr,0,new QTableWidgetItem(QString::number(*i)));
+    }
+}
+
 
 void MainWindow::receiveinfo()
 {
@@ -137,16 +148,19 @@ void MainWindow::receiveinfo()
         case REGS:
         {
             this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
+            this->printRegs();
             break;
         }
         case ALU:
         {
             this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
+            this->printAlu();
             break;
         }
         case INST:
         {
-            //@TODO
+            this->inst->append(this->pkg->getData());
+            this->printInst();
             break;
         }
         case OTHER:

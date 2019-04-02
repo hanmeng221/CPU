@@ -3,9 +3,9 @@
 #include "registry.h"
 #include"iostream"
 #include "QString"
+#include "inst.h"
 
 unsigned int QstringToUnInt(QString binary){
-
     if(binary.length() != 32){
         std::cout<<"the input is not 32'b"<<std::endl;
         return 0;
@@ -14,7 +14,7 @@ unsigned int QstringToUnInt(QString binary){
         unsigned int temp = 0;
         for(int i = 0;i<32;i++){
             std::cout<<binary.at(i).digitValue() <<std::endl;
-            temp += (binary.at(i).digitValue()) << (31-i);
+            temp += static_cast<unsigned int >((binary.at(i).digitValue()) << (31-i));
         }
         return temp;
     }

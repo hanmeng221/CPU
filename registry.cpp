@@ -2,7 +2,7 @@
 
 registry::registry(QObject *parent) : QObject(parent)
 {
-    this->reg = 0;
+    this->init();
 }
 registry::registry (const registry *other)
 {
@@ -10,7 +10,6 @@ registry::registry (const registry *other)
 }
 void registry::init(){
     this->reg = 0;
-    printf("init finish\n");
 }
 
 

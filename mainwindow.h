@@ -5,6 +5,7 @@
 #include "regs.h"
 #include "alu.h"
 #include "ssi.h"
+#include "inst.h"
 #include "QSerialPort"
 #include "QtSerialPort/QSerialPortInfo"
 
@@ -22,13 +23,12 @@ public:
     void printAlu();
     void printRegs();
     void setPortCombobox();
+    void printInst();
 private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_3_clicked();
     void receiveinfo();
-
-
 
     void on_pushButton_clicked();
 
@@ -42,6 +42,7 @@ private:
     Alu* alu;
     Ssi* ssi;
     Package * pkg;
+    Inst *inst;
     int outputbit;
 };
 

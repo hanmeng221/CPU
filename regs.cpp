@@ -2,7 +2,7 @@
 #include "iostream"
 Regs::Regs()
 {
-
+    this->init();
 }
 
 void Regs::init()
