@@ -139,35 +139,41 @@ void MainWindow::printInst()
 
 void MainWindow::receiveinfo()
 {
-    //@TODO if continue receive lots of messages, if we only use data[0], maybe loss information.
-   unsigned char temp = static_cast<unsigned char>(this->ssi->receiveInfo().data()[0]);
-   if(this->pkg->receivedata(temp))
+    //if continue receive lots of messages,we need to analize them one by one.
+    QByteArray list = this->ssi->receiveInfo();
+
+   for(QByteArray::iterator i = list.begin();i != list.end();i++)
    {
-        switch(this->pkg->getKind())
-        {
-        case REGS:
-        {
-            this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
-            this->printRegs();
-            break;
-        }
-        case ALU:
-        {
-            this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
-            this->printAlu();
-            break;
-        }
-        case INST:
-        {
-            this->inst->append(this->pkg->getData());
-            this->printInst();
-            break;
-        }
-        case OTHER:
-        {
-            break;
-        }
-        }
+       unsigned char temp = static_cast<unsigned char>(*i);
+       std::cout<<"receive:"<<temp<<std::endl;
+       if(this->pkg->receivedata(temp))
+       {
+            switch(this->pkg->getKind())
+            {
+            case REGS:
+            {
+                this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
+                this->printRegs();
+                break;
+            }
+            case ALU:
+            {
+                this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
+                this->printAlu();
+                break;
+            }
+            case INST:
+            {
+                this->inst->append(this->pkg->getData());
+                this->printInst();
+                break;
+            }
+            case OTHER:
+            {
+                break;
+            }
+            }
+       }
    }
 }
 
