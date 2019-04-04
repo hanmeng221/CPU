@@ -145,13 +145,14 @@ void MainWindow::receiveinfo()
    for(QByteArray::iterator i = list.begin();i != list.end();i++)
    {
        unsigned char temp = static_cast<unsigned char>(*i);
-       std::cout<<"receive:"<<temp<<std::endl;
+       std::cout<<"receive:"<<(int)temp<<std::endl;
        if(this->pkg->receivedata(temp))
        {
             switch(this->pkg->getKind())
             {
             case REGS:
             {
+                std::cout<<"set regs"<<std::endl;
                 this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
                 this->printRegs();
                 break;
