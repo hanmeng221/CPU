@@ -10,12 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
     this->regs = new Regs();
     this->ssi = new Ssi();
     this->pkg = new Package();
+    this->other = new Other();
     this->inst = new Inst(this->ui->instTableWidget->rowCount());
     this->setPortCombobox();
     this->outputbit = 16;
     this->printAlu();
     this->printRegs();
     this->printInst();
+    this->printOther();
 }
 
 MainWindow::~MainWindow()
@@ -23,6 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete alu;
     delete regs;
+    delete other;
 }
 
 void MainWindow::printAlu()
@@ -136,6 +139,16 @@ void MainWindow::printInst()
     }
 }
 
+void MainWindow::printOther()
+{
+    this->ui->otherTableWidget->setItem(0,0,new QTableWidgetItem("Hi"));
+    this->ui->otherTableWidget->setItem(0,1,new QTableWidgetItem("Lo"));
+    this->ui->otherTableWidget->setItem(0,2,new QTableWidgetItem("PC"));
+    this->ui->otherTableWidget->setItem(1,0,new QTableWidgetItem(this->other->getShowHi(this->outputbit)));
+    this->ui->otherTableWidget->setItem(1,1,new QTableWidgetItem(this->other->getShowLo(this->outputbit)));
+    this->ui->otherTableWidget->setItem(1,2,new QTableWidgetItem(this->other->getShowPc(this->outputbit)));
+}
+
 
 void MainWindow::receiveinfo()
 {
@@ -145,7 +158,7 @@ void MainWindow::receiveinfo()
    for(QByteArray::iterator i = list.begin();i != list.end();i++)
    {
        unsigned char temp = static_cast<unsigned char>(*i);
-       std::cout<<"receive:"<<(int)temp<<std::endl;
+       std::cout<<"receive:"<<static_cast<int>(temp)<<std::endl;
        if(this->pkg->receivedata(temp))
        {
             switch(this->pkg->getKind())
@@ -171,6 +184,8 @@ void MainWindow::receiveinfo()
             }
             case OTHER:
             {
+                this->other->setData(this->pkg->getAddr(),this->pkg->getData());
+                this->printOther();
                 break;
             }
             }
@@ -180,16 +195,25 @@ void MainWindow::receiveinfo()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    if(this->ui->comboBox->count() == 0)
+    if(this->ui->pushButton_3->text() == "CONNECT")
     {
-        std::cout<<"can not find a useable port"<<std::endl;
+        if(this->ui->comboBox->count() == 0)
+        {
+            std::cout<<"can not find a useable port"<<std::endl;
+        }
+        else
+        {
+            QString portName = this->ui->comboBox->currentText();
+            this->ssi->connectPorts(portName);
+            connect(this->ssi->m_serialPort,SIGNAL(readyRead()),this,SLOT(receiveinfo()));
+            this->ui->pushButton_3->setText("DISCONNECT");
+        }
     }
     else
     {
-        QString portName = this->ui->comboBox->currentText();
-        this->ssi->connectPorts(portName);
-        connect(this->ssi->m_serialPort,SIGNAL(readyRead()),this,SLOT(receiveinfo()));
-
+        this->ssi->disconnectPorts();
+        disconnect(this->ssi->m_serialPort,SIGNAL(readyRead()),this,nullptr);
+        this->ui->pushButton_3->setText("CONNECT");
     }
 }
 

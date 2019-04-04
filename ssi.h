@@ -21,6 +21,7 @@ public:
     void sendData(SsiInfo data);
     QByteArray receiveInfo();
     QSerialPort* m_serialPort;
+    void disconnectPorts();
 private:
 };
 

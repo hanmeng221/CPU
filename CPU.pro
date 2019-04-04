@@ -33,7 +33,8 @@ SOURCES += \
     registry.cpp \
     regs.cpp \
     ssi.cpp \
-    inst.cpp
+    inst.cpp \
+    other.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     registry.h \
     regs.h \
     ssi.h \
-    inst.h
+    inst.h \
+    other.h
 
 FORMS += \
         mainwindow.ui

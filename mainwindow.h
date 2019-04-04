@@ -8,6 +8,7 @@
 #include "inst.h"
 #include "QSerialPort"
 #include "QtSerialPort/QSerialPortInfo"
+#include "other.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,7 @@ public:
     void printRegs();
     void setPortCombobox();
     void printInst();
+    void printOther();
 private slots:
     void on_pushButton_5_clicked();
 
@@ -43,6 +45,7 @@ private:
     Ssi* ssi;
     Package * pkg;
     Inst *inst;
+    Other *other;
     int outputbit;
 };
 
