@@ -167,16 +167,16 @@ void Alu::setData(int addr, unsigned int data)
 {
     switch (addr)
     {
-    case 0: //inst
+    case 1: //inst
         this->setInst(data);
         break;
-    case 1: // reg1
+    case 2: // reg1
         this->setReg1(data);
         break;
-    case 2: // reg2
+    case 3: // reg2
         this->setReg2(data);
         break;
-    case 3://result
+    case 4://result
         this->setResult(data);
         break;
     default:

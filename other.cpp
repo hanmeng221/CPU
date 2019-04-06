@@ -46,14 +46,14 @@ void Other::setData(int addr, unsigned int data)
 {
     switch (addr)
     {
-    case 0: //hi
+    case 1: //pc
+        this->setPc(data);
+        break;
+    case 2://hi
         this->setHi(data);
         break;
-    case 1://lo
+    case 3://lo
         this->setLo(data);
-        break;
-    case 2://
-        this->setPc(data);
         break;
     default:
         break;

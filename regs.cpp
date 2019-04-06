@@ -28,14 +28,15 @@ unsigned int Regs::getData(int addr)
 
 void Regs::setData(int addr,unsigned int data)
 {
-    if(addr < 1 || addr > 31)
+    if(addr < 0 || addr > 31)
     {
-        std::cout<<"[Error] function:setData addr is wrong ,must between [1,31],input addr :"<<addr<<std::endl;
+        std::cout<<"[Error] function:setData addr is wrong ,must between [0,31],input addr :"<<addr<<std::endl;
         return;
     }
     else
     {
-        this->reg[addr].setReg(data);
+        if(addr != 0)
+            this->reg[addr].setReg(data);
         return;
     }
 }
