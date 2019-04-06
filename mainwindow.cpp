@@ -158,32 +158,34 @@ void MainWindow::receiveinfo()
    for(QByteArray::iterator i = list.begin();i != list.end();i++)
    {
        unsigned char temp = static_cast<unsigned char>(*i);
-       std::cout<<"receive:"<<static_cast<int>(temp)<<std::endl;
        if(this->pkg->receivedata(temp))
        {
             switch(this->pkg->getKind())
             {
             case REGS:
             {
-                std::cout<<"set regs"<<std::endl;
+                std::cout<<'['<<QTime::currentTime().second()<<']'<<"set regs"<<std::endl;
                 this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
                 this->printRegs();
                 break;
             }
             case ALU:
             {
+                std::cout<<"set alu"<<std::endl;
                 this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
                 this->printAlu();
                 break;
             }
             case INST:
             {
+                std::cout<<"set inst"<<std::endl;
                 this->inst->append(this->pkg->getData());
                 this->printInst();
                 break;
             }
             case OTHER:
             {
+                std::cout<<"set other"<<std::endl;
                 this->other->setData(this->pkg->getAddr(),this->pkg->getData());
                 this->printOther();
                 break;

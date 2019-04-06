@@ -9,6 +9,7 @@
 #include "QSerialPort"
 #include "QtSerialPort/QSerialPortInfo"
 #include "other.h"
+#include "QTime"
 
 namespace Ui {
 class MainWindow;

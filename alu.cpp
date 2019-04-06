@@ -107,6 +107,7 @@ void Alu::setOption(){
     case 10:this->option = "SLTI";break;
     case 11:this->option = "SLTIU";break;
     case 12:this->option = "ANDI";break;
+    case 13:this->option = "ORI";break;
     case 14:this->option = "XORI";break;
     case 15:this->option = "LUI";break;
     case 28:{
