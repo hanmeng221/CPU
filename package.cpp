@@ -11,8 +11,9 @@
  */
 
 
-Package::Package()
+Package::Package(QObject *parent): QObject (parent)
 {
+    this->data = new registry(parent);
     this->head = 0;
     this->data1 = 0;
     this->data2 = 0;
@@ -27,22 +28,24 @@ void Package::packaging()
     this->setLegal();
     if(this->isLegal())
     {
-        this->data.setReg(static_cast<unsigned int>(((this->data1 + (this->getDataNum(this->tail,3) << 7)) << 24)
+        this->data->setReg(static_cast<unsigned int>(((this->data1 + (this->getDataNum(this->tail,3) << 7)) << 24)
                       +((this->data2 + (this->getDataNum(this->tail,2) << 7)) << 16)
                       +((this->data3 + (this->getDataNum(this->tail,1) << 7)) << 8)
                       +(this->data4 + (this->getDataNum(this->tail,0) << 7))));
         this->setAddr();
         this->setKind();
+        return ;
     }
     else
     {
-        std::cout<<"the Package is not legal:receive data:"<<std::endl
-                    <<"\thead:"<<this->head<<std::endl
-                    <<"\tdata1:"<<this->data1<<std::endl
-                    <<"\tdata2:"<<this->data2<<std::endl
-                    <<"\tdata3:"<<this->data3<<std::endl
-                    <<"\tdata4:"<<this->data4<<std::endl
-                    <<"\ttail:"<<this->tail<<std::endl;
+
+//        QString("the Package is not legal:receive data:\n\thead:%1\n\tdata1:%2\n\tdata2:%3\n\tdata3:%4\n\tdata4:%5\n\ttail:%6")
+//                .arg(this->head)
+//                .arg(this->data1)
+//                .arg(this->data2)
+//                .arg(this->data3)
+//                .arg(this->data4)
+//                .arg(this->tail);
     }
 }
 
@@ -158,7 +161,12 @@ bool Package::isLegal()
 
 unsigned int  Package::getData()
 {
-    return this->data.getReg();
+    return this->data->getReg();
+}
+
+Package::~Package()
+{
+    delete this->data;
 }
 
 void Package::setKind()

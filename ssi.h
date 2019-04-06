@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QSerialPort>
 #include <package.h>
+#include "QObject"
 
 enum SsiInfo {
     GET,
@@ -22,7 +23,7 @@ public:
     QByteArray receiveInfo();
     QSerialPort* m_serialPort;
     void disconnectPorts();
-private:
+
 };
 
 #endif // SSI_H

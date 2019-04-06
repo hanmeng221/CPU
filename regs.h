@@ -2,11 +2,13 @@
 #define REGS_H
 #include "registry.h"
 #include "qvector.h"
+#include "QObject"
 
-class Regs
+class Regs:public QObject
 {
+    Q_OBJECT
 public:
-    Regs();
+    explicit Regs(QObject * parent = nullptr);
     void init();
     unsigned int getData(int addr);
     QString getShowData(int addr,int bit);
@@ -14,7 +16,7 @@ public:
     ~Regs();
     QVector<unsigned int> getAll();
 private:
-    registry reg[32];
+    registry* reg;
 };
 
 #endif // REGS_H

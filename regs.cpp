@@ -1,7 +1,8 @@
 #include "regs.h"
 #include "iostream"
-Regs::Regs()
+Regs::Regs(QObject *parent)
 {
+    this->reg = new registry[32];
     this->init();
 }
 
@@ -62,5 +63,5 @@ QString Regs::getShowData(int addr,int bit)
 }
 Regs::~Regs()
 {
-
+    delete [] this->reg;
 }

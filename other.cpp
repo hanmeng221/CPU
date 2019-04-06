@@ -1,45 +1,48 @@
 #include "other.h"
 
-Other::Other()
+Other::Other(QObject *parent):QObject (parent)
 {
- this->init();
+    this->hi = new registry(parent);
+    this->lo = new registry(parent);
+    this->pc = new registry(parent);
+    this->init();
 }
 
 void Other::init()
 {
-    this->hi.init();
-    this->lo.init();
-    this->pc.init();
+    this->hi->init();
+    this->lo->init();
+    this->pc->init();
 }
 
 unsigned int Other::getHi()
 {
-    return this->hi.getReg();
+    return this->hi->getReg();
 }
 
 unsigned int Other::getLo()
 {
-    return this->lo.getReg();
+    return this->lo->getReg();
 }
 
 unsigned int Other::getPc()
 {
-    return this->pc.getReg();
+    return this->pc->getReg();
 }
 
 QString Other::getShowHi(int bit)
 {
-    return  this->hi.toQString(bit);
+    return  this->hi->toQString(bit);
 }
 
 QString Other::getShowLo(int bit)
 {
-    return this->lo.toQString(bit);
+    return this->lo->toQString(bit);
 }
 
 QString Other::getShowPc(int bit)
 {
-    return this->pc.toQString(bit);
+    return this->pc->toQString(bit);
 }
 
 void Other::setData(int addr, unsigned int data)
@@ -62,22 +65,24 @@ void Other::setData(int addr, unsigned int data)
 
 Other::~Other()
 {
-
+    delete hi;
+    delete lo;
+    delete pc;
 }
 
 void Other::setHi(unsigned int hi)
 {
-    this->hi.setReg(hi);
+    this->hi->setReg(hi);
 }
 
 void Other::setLo(unsigned int lo)
 {
-    this->lo.setReg(lo);
+    this->lo->setReg(lo);
 }
 
 void Other::setPc(unsigned int pc)
 {
-    this->pc.setReg(pc);
+    this->pc->setReg(pc);
 }
 
 
