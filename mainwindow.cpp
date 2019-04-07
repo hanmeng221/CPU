@@ -247,7 +247,6 @@ void MainWindow::on_pushButton_4_clicked() //ping
 void MainWindow::on_pushButton_2_clicked() // resetn
 {
     this->ssi->sendData(RESET);
-<<<<<<< HEAD
     this->inst->init();
     this->alu->init();
     this->regs->init();
@@ -256,7 +255,5 @@ void MainWindow::on_pushButton_2_clicked() // resetn
     this->printRegs();
     this->printInst();
     this->printOther();
-=======
     emit DEBUG("send resetn command");
->>>>>>> 9fa58d94f54291c9b2f5af7d78813b9791193cc9
 }
