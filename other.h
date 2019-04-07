@@ -2,12 +2,14 @@
 #define OTHER_H
 #include <QString>
 #include <registry.h>
+#include "QObject"
 
 #endif // OTHER_H
-class Other
+class Other:public QObject
 {
+    Q_OBJECT
 public:
-    Other();
+    explicit Other(QObject *parent = nullptr);
     void init();
     unsigned int getHi();
     unsigned int getLo();
@@ -21,9 +23,9 @@ public:
 
     ~Other();
 private:
-    registry hi;
-    registry lo;
-    registry pc;
+    registry* hi;
+    registry* lo;
+    registry* pc;
 
     void setHi(unsigned int hi);
     void setLo(unsigned int lo);

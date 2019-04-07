@@ -2,12 +2,14 @@
 #define ALU_H
 #include "QString"
 #include "registry.h"
+#include "QObject"
 
-#endif // ALU_H
 
-class Alu{
+class Alu :public QObject
+{
+    Q_OBJECT
 public:
-    Alu();
+    explicit Alu(QObject *parent = nullptr);
     void init();
     unsigned int getInst();
     unsigned int getReg1();
@@ -24,10 +26,10 @@ public:
 
     ~Alu();
 private:
-    registry reg1;
-    registry reg2;
-    registry result;
-    registry inst;
+    registry* reg1;
+    registry* reg2;
+    registry* result;
+    registry* inst;
     QString option;
     void setOption();
     void setInst(unsigned int inst);
@@ -36,3 +38,5 @@ private:
     void setResult(unsigned int result);
 
 };
+#endif // ALU_H
+

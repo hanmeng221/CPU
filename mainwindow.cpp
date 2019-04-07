@@ -6,18 +6,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->alu = new Alu();
-    this->regs = new Regs();
+    this->alu = new Alu(parent);
+    this->regs = new Regs(parent);
     this->ssi = new Ssi();
-    this->pkg = new Package();
-    this->other = new Other();
-    this->inst = new Inst(this->ui->instTableWidget->rowCount());
+    this->pkg = new Package(parent);
+    this->other = new Other(parent);
+    this->inst = new Inst(this->ui->instTableWidget->rowCount(),parent);
     this->setPortCombobox();
     this->outputbit = 16;
     this->printAlu();
     this->printRegs();
     this->printInst();
     this->printOther();
+    connect(this,SIGNAL(DEBUG(QString)),this,SLOT(debug(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +27,9 @@ MainWindow::~MainWindow()
     delete alu;
     delete regs;
     delete other;
+    delete inst;
+    delete ssi;
+    delete pkg;
 }
 
 void MainWindow::printAlu()
@@ -164,29 +168,32 @@ void MainWindow::receiveinfo()
             {
             case REGS:
             {
-                std::cout<<'['<<QTime::currentTime().second()<<']'<<"set regs"<<std::endl;
                 this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
+                emit DEBUG(QString("[%1:%2:%3] set regs\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printRegs();
                 break;
             }
             case ALU:
             {
-                std::cout<<"set alu"<<std::endl;
+
                 this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
+                emit DEBUG(QString("[%1:%2:%3] set alu\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printAlu();
                 break;
             }
             case INST:
             {
-                std::cout<<"set inst"<<std::endl;
+
                 this->inst->append(this->pkg->getData());
+                emit DEBUG(QString("[%1:%2:%3] set inst\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printInst();
                 break;
             }
             case OTHER:
             {
-                std::cout<<"set other"<<std::endl;
+
                 this->other->setData(this->pkg->getAddr(),this->pkg->getData());
+                emit DEBUG(QString("[%1:%2:%3] set other\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printOther();
                 break;
             }
@@ -195,13 +202,19 @@ void MainWindow::receiveinfo()
    }
 }
 
+void MainWindow::debug(QString info)
+{
+    this->ui->textBrowser->insertPlainText(info);
+}
+
 void MainWindow::on_pushButton_3_clicked()
 {
     if(this->ui->pushButton_3->text() == "CONNECT")
     {
         if(this->ui->comboBox->count() == 0)
         {
-            std::cout<<"can not find a useable port"<<std::endl;
+
+            emit DEBUG(QString("can not find a useable port\n"));
         }
         else
         {
@@ -221,17 +234,20 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_clicked() //get
 {
-       this->ssi->sendData(GET);
+    this->ssi->sendData(GET);
+    emit DEBUG("send get command");
 }
 
 void MainWindow::on_pushButton_4_clicked() //ping
 {
     this->ssi->sendData(PING);
+    emit DEBUG("send ping command");
 }
 
 void MainWindow::on_pushButton_2_clicked() // resetn
 {
     this->ssi->sendData(RESET);
+<<<<<<< HEAD
     this->inst->init();
     this->alu->init();
     this->regs->init();
@@ -240,4 +256,7 @@ void MainWindow::on_pushButton_2_clicked() // resetn
     this->printRegs();
     this->printInst();
     this->printOther();
+=======
+    emit DEBUG("send resetn command");
+>>>>>>> 9fa58d94f54291c9b2f5af7d78813b9791193cc9
 }

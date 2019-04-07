@@ -1,6 +1,6 @@
 #include "inst.h"
 
-Inst::Inst(int queueSize)
+Inst::Inst(int queueSize,QObject *parent ):QObject (parent)
 {
     this->queuesize = queueSize;
     this->init();

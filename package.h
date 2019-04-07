@@ -1,9 +1,9 @@
 #ifndef PACKAGE_H
 #define PACKAGE_H
 
-#endif // PACKAGE_H
 #include "QString"
 #include "registry.h"
+#include "QObject"
 
 enum packagetype{
     REGS,
@@ -12,15 +12,18 @@ enum packagetype{
     OTHER
 };
 
-class Package{
+class Package:public QObject
+{
+    Q_OBJECT
 public:
-    Package();
+    explicit Package(QObject *parent = nullptr);
     void packaging();
     bool receivedata(unsigned char data);
     packagetype getKind();
     int getAddr();
     bool isLegal();
     unsigned int  getData();
+    ~Package();
 private:
     unsigned char head;
     unsigned char data1;
@@ -30,7 +33,7 @@ private:
     unsigned char tail;
 
     packagetype kind;
-    registry data;
+    registry* data;
     int addr;
     bool legal;
     int data_count;
@@ -47,3 +50,4 @@ private:
     bool isZero(unsigned char data, int addr);
     int getDataNum(unsigned char data,int addr);
 };
+#endif // PACKAGE_H

@@ -34,6 +34,7 @@ void Ssi::connectPorts(QString portName)
     }
     else
     {
+        //emit DEBUG(QString("open succedded"));
         std::cout<<portName.toStdString().data()<<" open successed"<<std::endl;
         m_serialPort->setBaudRate(QSerialPort::Baud115200,QSerialPort::AllDirections);
         m_serialPort->setDataBits(QSerialPort::Data8);

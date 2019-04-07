@@ -1,44 +1,51 @@
 #include "alu.h"
 
-Alu::Alu(){
+Alu::Alu(QObject *parent):QObject (parent){
+    this->reg1 = new registry(parent);
+    this->reg2 = new registry(parent);
+    this->result = new registry(parent);
+    this->inst = new registry(parent);
     this->init();
 }
 
 Alu::~Alu(){
-
+    delete this->reg1;
+    delete this->reg2;
+    delete this->result;
+    delete this->inst;
 }
 void Alu::init(){
-    this->inst.init();
-    this->reg1.init();
-    this->reg2.init();
-    this->result.init();
+    this->inst->init();
+    this->reg1->init();
+    this->reg2->init();
+    this->result->init();
     this->option = "NOP";
 }
 
 void Alu::setInst(unsigned int inst){
-    this->inst.setReg(inst);
+    this->inst->setReg(inst);
     this->setOption();
 }
 
 void Alu::setReg1(unsigned int reg1){
-    this->reg1.setReg(reg1);
+    this->reg1->setReg(reg1);
 }
 
 void Alu::setReg2(unsigned int reg2){
-    this->reg2.setReg(reg2);
+    this->reg2->setReg(reg2);
 }
 
 void Alu::setResult(unsigned int result){
-    this->result.setReg(result);
+    this->result->setReg(result);
 }
 
 void Alu::setOption(){
-    unsigned int op1 = this->inst.getSubData(31,26);
+    unsigned int op1 = this->inst->getSubData(31,26);
     switch (op1) { // op1 = inst[31:26]
         case 0:{
-            unsigned int op2 = this->inst.getSubData(10,6); // op2 = inst[10:6]
+            unsigned int op2 = this->inst->getSubData(10,6); // op2 = inst[10:6]
             if(op2 == 0){
-                unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
+                unsigned int op4 = this->inst->getSubData(5,0); //op4 = inst[5:0]
                 switch (op4) {
                 case 4:this->option = "SLLV";break;
                 case 6:this->option = "SRLV";break;
@@ -68,9 +75,9 @@ void Alu::setOption(){
                 }
             }//end if op2 = 0
             else{
-                unsigned int op3 = this->inst.getSubData(25,21);//op3 = inst[25:21]
+                unsigned int op3 = this->inst->getSubData(25,21);//op3 = inst[25:21]
                 if( op3 == 0){ //sll,srl,sra
-                    unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
+                    unsigned int op4 = this->inst->getSubData(5,0); //op4 = inst[5:0]
                     switch (op4) {
                     case 0:this->option = "SLL";break;
                     case 2:this->option = "SRL";break;
@@ -86,7 +93,7 @@ void Alu::setOption(){
         break;
         }//end case 0
         case 1:{
-        unsigned int op5 = this->inst.getSubData(20,16);//op5 = inst[20:16];
+        unsigned int op5 = this->inst->getSubData(20,16);//op5 = inst[20:16];
         switch (op5) {
         case 0:this->option = "BLTZ";break;
         case 1:this->option = "BGEZ";break;
@@ -111,7 +118,7 @@ void Alu::setOption(){
     case 14:this->option = "XORI";break;
     case 15:this->option = "LUI";break;
     case 28:{
-        unsigned int op4 = this->inst.getSubData(5,0); //op4 = inst[5:0]
+        unsigned int op4 = this->inst->getSubData(5,0); //op4 = inst[5:0]
         switch (op4){
         case 2:this->option =  "MUL";break;
         case 32:this->option = "CLZ";break;
@@ -128,16 +135,16 @@ void Alu::setOption(){
 }
 
 unsigned int Alu::getInst(){
-    return this->inst.getReg();
+    return this->inst->getReg();
 }
 unsigned int Alu::getReg1(){
-    return this->reg1.getReg();
+    return this->reg1->getReg();
 }
 unsigned int Alu::getReg2(){
-    return this->reg2.getReg();
+    return this->reg2->getReg();
 }
 unsigned int Alu::getResult(){
-    return this->result.getReg();
+    return this->result->getReg();
 }
 QString Alu::getOption(){
     return this->option;
@@ -145,19 +152,19 @@ QString Alu::getOption(){
 
 QString Alu::getShowInst(int bit)
 {
-    return  this->inst.toQString(bit);
+    return  this->inst->toQString(bit);
 }
 QString Alu::getShowReg1(int bit)
 {
-    return this->reg1.toQString(bit);
+    return this->reg1->toQString(bit);
 }
 QString Alu::getShowReg2(int bit)
 {
-    return this->reg2.toQString(bit);
+    return this->reg2->toQString(bit);
 }
 QString Alu::getShowResult(int bit)
 {
-    return this->result.toQString(bit);
+    return this->result->toQString(bit);
 }
 QString Alu::getShowOption()
 {
