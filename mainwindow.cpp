@@ -232,4 +232,12 @@ void MainWindow::on_pushButton_4_clicked() //ping
 void MainWindow::on_pushButton_2_clicked() // resetn
 {
     this->ssi->sendData(RESET);
+    this->inst->init();
+    this->alu->init();
+    this->regs->init();
+    this->other->init();
+    this->printAlu();
+    this->printRegs();
+    this->printInst();
+    this->printOther();
 }

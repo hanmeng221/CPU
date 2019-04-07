@@ -9,8 +9,9 @@ public:
     Inst(int queueSize);
     QQueue<unsigned int> getQueue();
     void append(unsigned int inst);
-private:
     void init();
+private:
+
     QQueue<unsigned int> queue;
     int queuesize;
 };
