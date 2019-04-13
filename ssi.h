@@ -13,16 +13,19 @@ enum SsiInfo {
     RESET
 };
 
-class Ssi
+class Ssi:public QObject
 {
+    Q_OBJECT
 public:
-    Ssi();
+    explicit Ssi(QObject * parent = nullptr);
     QList<QSerialPortInfo> getAllPorts();
     void connectPorts(QString portName);
     void sendData(SsiInfo data);
     QByteArray receiveInfo();
     QSerialPort* m_serialPort;
     void disconnectPorts();
+signals:
+    void DEBUG(QString );
 
 };
 

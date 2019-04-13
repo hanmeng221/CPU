@@ -18,8 +18,9 @@ public:
     void setReg(unsigned int data);
     QString toQString(int bit);
     ~registry();
-signals:
 
+signals:
+    void DEBUG(QString );
 public slots:
 
 private:

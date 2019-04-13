@@ -49,5 +49,7 @@ private:
     bool setTail(unsigned char tail);
     bool isZero(unsigned char data, int addr);
     int getDataNum(unsigned char data,int addr);
+signals:
+    void DEBUG(QString );
 };
 #endif // PACKAGE_H

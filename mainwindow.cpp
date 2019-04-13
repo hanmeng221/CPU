@@ -19,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->printInst();
     this->printOther();
     connect(this,SIGNAL(DEBUG(QString)),this,SLOT(debug(QString)));
+    connect(this->regs,&Regs::DEBUG,this,&this->debug);
+    connect(this->pkg,&Package::DEBUG,this,&this->debug);
+    connect(this->ssi,&Ssi::DEBUG,this,&this->debug);
 }
 
 MainWindow::~MainWindow()
@@ -48,39 +51,39 @@ void MainWindow::printAlu()
 
 void MainWindow::printRegs()
 {
-    this->ui->regsTableWidget->setItem(0,0,new QTableWidgetItem("0"));
-    this->ui->regsTableWidget->setItem(1,0,new QTableWidgetItem("1"));
-    this->ui->regsTableWidget->setItem(2,0,new QTableWidgetItem("2"));
-    this->ui->regsTableWidget->setItem(3,0,new QTableWidgetItem("3"));
-    this->ui->regsTableWidget->setItem(4,0,new QTableWidgetItem("4"));
-    this->ui->regsTableWidget->setItem(5,0,new QTableWidgetItem("5"));
-    this->ui->regsTableWidget->setItem(6,0,new QTableWidgetItem("6"));
-    this->ui->regsTableWidget->setItem(7,0,new QTableWidgetItem("7"));
-    this->ui->regsTableWidget->setItem(8,0,new QTableWidgetItem("8"));
-    this->ui->regsTableWidget->setItem(9,0,new QTableWidgetItem("9"));
-    this->ui->regsTableWidget->setItem(10,0,new QTableWidgetItem("10"));
-    this->ui->regsTableWidget->setItem(11,0,new QTableWidgetItem("11"));
-    this->ui->regsTableWidget->setItem(12,0,new QTableWidgetItem("12"));
-    this->ui->regsTableWidget->setItem(13,0,new QTableWidgetItem("13"));
-    this->ui->regsTableWidget->setItem(14,0,new QTableWidgetItem("14"));
-    this->ui->regsTableWidget->setItem(15,0,new QTableWidgetItem("15"));
+    this->ui->regsTableWidget->setItem(0,0,new QTableWidgetItem("0($zero)"));
+    this->ui->regsTableWidget->setItem(1,0,new QTableWidgetItem("1($at)"));
+    this->ui->regsTableWidget->setItem(2,0,new QTableWidgetItem("2($v0)"));
+    this->ui->regsTableWidget->setItem(3,0,new QTableWidgetItem("3($v1)"));
+    this->ui->regsTableWidget->setItem(4,0,new QTableWidgetItem("4($a0)"));
+    this->ui->regsTableWidget->setItem(5,0,new QTableWidgetItem("5($a1)"));
+    this->ui->regsTableWidget->setItem(6,0,new QTableWidgetItem("6($a2)"));
+    this->ui->regsTableWidget->setItem(7,0,new QTableWidgetItem("7($a3)"));
+    this->ui->regsTableWidget->setItem(8,0,new QTableWidgetItem("8($t0)"));
+    this->ui->regsTableWidget->setItem(9,0,new QTableWidgetItem("9($t1)"));
+    this->ui->regsTableWidget->setItem(10,0,new QTableWidgetItem("10($t2)"));
+    this->ui->regsTableWidget->setItem(11,0,new QTableWidgetItem("11($t3)"));
+    this->ui->regsTableWidget->setItem(12,0,new QTableWidgetItem("12($t4)"));
+    this->ui->regsTableWidget->setItem(13,0,new QTableWidgetItem("13($t5)"));
+    this->ui->regsTableWidget->setItem(14,0,new QTableWidgetItem("14($t6)"));
+    this->ui->regsTableWidget->setItem(15,0,new QTableWidgetItem("15($t7)"));
 
-    this->ui->regsTableWidget->setItem(0,2,new QTableWidgetItem("16"));
-    this->ui->regsTableWidget->setItem(1,2,new QTableWidgetItem("17"));
-    this->ui->regsTableWidget->setItem(2,2,new QTableWidgetItem("18"));
-    this->ui->regsTableWidget->setItem(3,2,new QTableWidgetItem("19"));
-    this->ui->regsTableWidget->setItem(4,2,new QTableWidgetItem("20"));
-    this->ui->regsTableWidget->setItem(5,2,new QTableWidgetItem("21"));
-    this->ui->regsTableWidget->setItem(6,2,new QTableWidgetItem("22"));
-    this->ui->regsTableWidget->setItem(7,2,new QTableWidgetItem("23"));
-    this->ui->regsTableWidget->setItem(8,2,new QTableWidgetItem("24"));
-    this->ui->regsTableWidget->setItem(9,2,new QTableWidgetItem("25"));
-    this->ui->regsTableWidget->setItem(10,2,new QTableWidgetItem("26"));
-    this->ui->regsTableWidget->setItem(11,2,new QTableWidgetItem("27"));
-    this->ui->regsTableWidget->setItem(12,2,new QTableWidgetItem("28"));
-    this->ui->regsTableWidget->setItem(13,2,new QTableWidgetItem("29"));
-    this->ui->regsTableWidget->setItem(14,2,new QTableWidgetItem("30"));
-    this->ui->regsTableWidget->setItem(15,2,new QTableWidgetItem("31"));
+    this->ui->regsTableWidget->setItem(0,2,new QTableWidgetItem("16($s0)"));
+    this->ui->regsTableWidget->setItem(1,2,new QTableWidgetItem("17($s1)"));
+    this->ui->regsTableWidget->setItem(2,2,new QTableWidgetItem("18($s3)"));
+    this->ui->regsTableWidget->setItem(3,2,new QTableWidgetItem("19($s4)"));
+    this->ui->regsTableWidget->setItem(4,2,new QTableWidgetItem("20($s5)"));
+    this->ui->regsTableWidget->setItem(5,2,new QTableWidgetItem("21($s6)"));
+    this->ui->regsTableWidget->setItem(6,2,new QTableWidgetItem("22($s6)"));
+    this->ui->regsTableWidget->setItem(7,2,new QTableWidgetItem("23($s7)"));
+    this->ui->regsTableWidget->setItem(8,2,new QTableWidgetItem("24($t8)"));
+    this->ui->regsTableWidget->setItem(9,2,new QTableWidgetItem("25($t9)"));
+    this->ui->regsTableWidget->setItem(10,2,new QTableWidgetItem("26($k0)"));
+    this->ui->regsTableWidget->setItem(11,2,new QTableWidgetItem("27($k1)"));
+    this->ui->regsTableWidget->setItem(12,2,new QTableWidgetItem("28($gp)"));
+    this->ui->regsTableWidget->setItem(13,2,new QTableWidgetItem("29($sp)"));
+    this->ui->regsTableWidget->setItem(14,2,new QTableWidgetItem("30($fp)"));
+    this->ui->regsTableWidget->setItem(15,2,new QTableWidgetItem("31($ra)"));
 
 
     this->ui->regsTableWidget->setItem(0,1,new QTableWidgetItem(this->regs->getShowData(0,this->outputbit)));
@@ -139,7 +142,7 @@ void MainWindow::printInst()
     QQueue<unsigned int> temp = this->inst->getQueue();
     for(QQueue<unsigned int>::iterator i = temp.begin() , total = temp.end(); i!= total; i++,ptr --)
     {
-        this->ui->instTableWidget->setItem(ptr,0,new QTableWidgetItem(QString::number(*i)));
+        this->ui->instTableWidget->setItem(ptr,0,new QTableWidgetItem(QString::number(*i,16)));
     }
 }
 
@@ -169,7 +172,6 @@ void MainWindow::receiveinfo()
             case REGS:
             {
                 this->regs->setData(this->pkg->getAddr(),this->pkg->getData());
-                emit DEBUG(QString("[%1:%2:%3] set regs\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printRegs();
                 break;
             }
@@ -177,7 +179,6 @@ void MainWindow::receiveinfo()
             {
 
                 this->alu->setData(this->pkg->getAddr(),this->pkg->getData());
-                emit DEBUG(QString("[%1:%2:%3] set alu\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printAlu();
                 break;
             }
@@ -185,7 +186,6 @@ void MainWindow::receiveinfo()
             {
 
                 this->inst->append(this->pkg->getData());
-                emit DEBUG(QString("[%1:%2:%3] set inst\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printInst();
                 break;
             }
@@ -193,7 +193,6 @@ void MainWindow::receiveinfo()
             {
 
                 this->other->setData(this->pkg->getAddr(),this->pkg->getData());
-                emit DEBUG(QString("[%1:%2:%3] set other\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()));
                 this->printOther();
                 break;
             }
@@ -255,5 +254,6 @@ void MainWindow::on_pushButton_2_clicked() // resetn
     this->printRegs();
     this->printInst();
     this->printOther();
+    this->ui->textBrowser->clear();
     emit DEBUG("send resetn command");
 }

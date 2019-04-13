@@ -1,6 +1,6 @@
 #include "ssi.h"
 
-Ssi::Ssi()
+Ssi::Ssi(QObject *parent): QObject (parent)
 {
     m_serialPort = new QSerialPort();
 }
@@ -18,7 +18,7 @@ void Ssi::disconnectPorts()
         m_serialPort->clear();
         m_serialPort->close();
     }
-    std::cout<<portName.toStdString()<<" close successed"<<std::endl;
+    emit DEBUG(portName+" close successed");
 }
 void Ssi::connectPorts(QString portName)
 {
@@ -30,12 +30,11 @@ void Ssi::connectPorts(QString portName)
     m_serialPort->setPortName(portName);
     if (!m_serialPort->open(QIODevice::ReadWrite))
     {
-        std::cout<<portName.toStdString().data()<<" open failed"<<std::endl;
+        emit DEBUG(portName+" open failed");
     }
     else
     {
-        //emit DEBUG(QString("open succedded"));
-        std::cout<<portName.toStdString().data()<<" open successed"<<std::endl;
+        emit DEBUG(portName+" open successed");
         m_serialPort->setBaudRate(QSerialPort::Baud115200,QSerialPort::AllDirections);
         m_serialPort->setDataBits(QSerialPort::Data8);
         m_serialPort->setFlowControl(QSerialPort::NoFlowControl);

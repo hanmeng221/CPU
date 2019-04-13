@@ -18,7 +18,7 @@ unsigned int Regs::getData(int addr)
 {
     if(addr < 0 || addr > 31 )
     {
-        std::cout<<"[Error] function:getData addr is wrong ,must between [0,31],input addr :"<<addr<<std::endl;
+        emit DEBUG("[Error] function:getData addr is wrong ,must between [0,31],input addr :"+ addr);
         return 0;
     }
     else
@@ -31,7 +31,7 @@ void Regs::setData(int addr,unsigned int data)
 {
     if(addr < 0 || addr > 31)
     {
-        std::cout<<"[Error] function:setData addr is wrong ,must between [0,31],input addr :"<<addr<<std::endl;
+        emit DEBUG("[Error] function:setData addr is wrong ,must between [0,31],input addr :"+ addr);
         return;
     }
     else
@@ -57,7 +57,7 @@ QString Regs::getShowData(int addr,int bit)
     if(addr < 0 || addr > 31)
     {
         addr = 0;
-        std::cout<<"the addr is out of range [0,31],use 0 instead of "<<std::endl;
+        emit DEBUG("the addr is out of range [0,31],use 0 instead of ");
     }
     return this->reg[addr].toQString(bit);
 }

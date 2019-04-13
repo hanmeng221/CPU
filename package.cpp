@@ -38,14 +38,13 @@ void Package::packaging()
     }
     else
     {
-
-//        QString("the Package is not legal:receive data:\n\thead:%1\n\tdata1:%2\n\tdata2:%3\n\tdata3:%4\n\tdata4:%5\n\ttail:%6")
-//                .arg(this->head)
-//                .arg(this->data1)
-//                .arg(this->data2)
-//                .arg(this->data3)
-//                .arg(this->data4)
-//                .arg(this->tail);
+        emit DEBUG(QString("the Package is not legal:receive data:\n\thead:%1\n\tdata1:%2\n\tdata2:%3\n\tdata3:%4\n\tdata4:%5\n\ttail:%6")
+                .arg(this->head)
+                .arg(this->data1)
+                .arg(this->data2)
+                .arg(this->data3)
+                .arg(this->data4)
+                .arg(this->tail));
     }
 }
 
@@ -208,7 +207,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout<<"data receive head is illegal"<<std::endl;
+            emit DEBUG("data receive head is illegal");
         }
         break;
     case 1:
@@ -217,7 +216,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout<<"data receive data1 is illegal" <<std::endl;
+            emit DEBUG("data receive data1 is illegal");
         }
         break;
     case 2:
@@ -226,7 +225,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout<<"data receive data2 is illegal" <<std::endl;
+            emit DEBUG("data receive data2 is illegal");
         }
         break;
     case 3:
@@ -235,7 +234,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout << "data receive data3 is illegal" <<std::endl;
+            emit DEBUG("data receive data3 is illegal");
         }
         break;
     case 4:
@@ -244,7 +243,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout<< "data receive data4 is illegal" <<std::endl;
+            emit DEBUG("data receive data4 is illegal");
         }
         break;
     case 5:
@@ -260,7 +259,7 @@ bool Package::receivedata(unsigned char data)
         else
         {
             this->data_count = 0;
-            std::cout << "data receive tail is illegal" <<std::endl;
+            emit DEBUG("data receive tail is illegal");
         }
         break;
     default:

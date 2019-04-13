@@ -17,6 +17,9 @@ public:
     QVector<unsigned int> getAll();
 private:
     registry* reg;
+signals:
+    void DEBUG(QString );
+
 };
 
 #endif // REGS_H
