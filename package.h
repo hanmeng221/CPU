@@ -21,8 +21,8 @@ public:
     bool receivedata(unsigned char data);
     packagetype getKind();
     int getAddr();
-    bool isLegal();
     unsigned int  getData();
+    bool isbubble();
     ~Package();
 private:
     unsigned char head;
@@ -35,11 +35,11 @@ private:
     packagetype kind;
     registry* data;
     int addr;
-    bool legal;
     int data_count;
     void setKind();
     void setAddr();
-    void setLegal();
+    void setbubble(bool bubble);
+    bool bubble;
 
     bool setHead(unsigned char head);
     bool setData1(unsigned char data1);
@@ -48,6 +48,7 @@ private:
     bool setData4(unsigned char data4);
     bool setTail(unsigned char tail);
     bool isZero(unsigned char data, int addr);
+
     int getDataNum(unsigned char data,int addr);
 signals:
     void DEBUG(QString );

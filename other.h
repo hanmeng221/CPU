@@ -14,10 +14,12 @@ public:
     unsigned int getHi();
     unsigned int getLo();
     unsigned int getPc();
+    unsigned int getState();
 
     QString getShowHi(int bit);
     QString getShowLo(int bit);
     QString getShowPc(int bit);
+    QString getShowState();
 
     void setData(int addr,unsigned int data);
 
@@ -26,10 +28,11 @@ private:
     registry* hi;
     registry* lo;
     registry* pc;
+    registry* state;
 
     void setHi(unsigned int hi);
     void setLo(unsigned int lo);
     void setPc(unsigned int pc);
-
+    void setState(unsigned int state);
 };
 

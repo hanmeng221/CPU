@@ -151,9 +151,11 @@ void MainWindow::printOther()
     this->ui->otherTableWidget->setItem(0,0,new QTableWidgetItem("Hi"));
     this->ui->otherTableWidget->setItem(0,1,new QTableWidgetItem("Lo"));
     this->ui->otherTableWidget->setItem(0,2,new QTableWidgetItem("PC"));
+    this->ui->otherTableWidget->setItem(0,3,new QTableWidgetItem("State"));
     this->ui->otherTableWidget->setItem(1,0,new QTableWidgetItem(this->other->getShowHi(this->outputbit)));
     this->ui->otherTableWidget->setItem(1,1,new QTableWidgetItem(this->other->getShowLo(this->outputbit)));
     this->ui->otherTableWidget->setItem(1,2,new QTableWidgetItem(this->other->getShowPc(this->outputbit)));
+    this->ui->otherTableWidget->setItem(1,3,new QTableWidgetItem(this->other->getShowState()));
 }
 
 
@@ -184,10 +186,16 @@ void MainWindow::receiveinfo()
             }
             case INST:
             {
-
-                this->inst->append(this->pkg->getData());
-                this->printInst();
-                break;
+                if(!this->pkg->isbubble())
+                {
+                    this->inst->append(this->pkg->getData());
+                    this->printInst();
+                    break;
+                }
+                else
+                {
+                    emit DEBUG("occur buble in CPU streaming");
+                }
             }
             case OTHER:
             {

@@ -1,7 +1,7 @@
 #include "package.h"
 /*Package struct
- * legal: 偶校验
- * 1 | 0 | legal| addr [4:0]                         |
+ *
+ * 1 | 0 | bubble| addr [4:0]                         |
  * 0 | d[30:24]                                      |
  * 0 | d[22:16]                                      |
  * 0 | d[14:8]                                       |
@@ -21,31 +21,20 @@ Package::Package(QObject *parent): QObject (parent)
     this->data4 = 0;
     this->tail = 0;
     this->data_count = 0;
+    this->bubble = false;
 }
 
 void Package::packaging()
 {
-    this->setLegal();
-    if(this->isLegal())
-    {
+
         this->data->setReg(static_cast<unsigned int>(((this->data1 + (this->getDataNum(this->tail,3) << 7)) << 24)
                       +((this->data2 + (this->getDataNum(this->tail,2) << 7)) << 16)
                       +((this->data3 + (this->getDataNum(this->tail,1) << 7)) << 8)
                       +(this->data4 + (this->getDataNum(this->tail,0) << 7))));
         this->setAddr();
         this->setKind();
+        this->setbubble(this->getDataNum(this->head,5) == 0? false:true);
         return ;
-    }
-    else
-    {
-        emit DEBUG(QString("the Package is not legal:receive data:\n\thead:%1\n\tdata1:%2\n\tdata2:%3\n\tdata3:%4\n\tdata4:%5\n\ttail:%6")
-                .arg(this->head)
-                .arg(this->data1)
-                .arg(this->data2)
-                .arg(this->data3)
-                .arg(this->data4)
-                .arg(this->tail));
-    }
 }
 
 bool Package::setHead(unsigned char head)
@@ -153,14 +142,14 @@ int Package::getAddr()
     return this->addr;
 }
 
-bool Package::isLegal()
-{
-    return this->legal;
-}
-
 unsigned int  Package::getData()
 {
     return this->data->getReg();
+}
+
+bool Package::isbubble()
+{
+    return this->bubble;
 }
 
 Package::~Package()
@@ -193,10 +182,11 @@ void Package::setAddr()
     this->addr = this->head  &  31;
 }
 
-void Package::setLegal()
+void Package::setbubble(bool bubble)
 {
-    this->legal = (this->getDataNum(this->head,5) ^ (this->data1 & 1) ^ (this->data2 & 1) ^ (this->data3 & 1) ^ (this->data4 & 1) ^ (this->tail & 1))  == 0 ? true:false;
+    this->bubble = bubble;
 }
+
 
 bool Package::receivedata(unsigned char data)
 {
@@ -251,10 +241,8 @@ bool Package::receivedata(unsigned char data)
         {
             this->data_count = (this->data_count + 1) % 6;
             this->packaging();
-            if(this->isLegal())
-            {
-                return true;
-            }
+            return true;
+
         }
         else
         {
